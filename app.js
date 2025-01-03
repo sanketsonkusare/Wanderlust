@@ -5,10 +5,15 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
-const listings = require("./routes/listing.js");
-const  review = require("./routes/review.js");
+const listingsRouter = require("./routes/listing.js");
+const  reviewRouter = require("./routes/review.js");
+const  userRouter = require("./routes/user.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const user = require("./models/user.js");
+
 
 main().then(() => {
     console.log("connectd to db");
@@ -45,6 +50,13 @@ app.get("/", (req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.session());
+app.use(passport.initialize());
+passport.use(new localStrategy(user.authenticate()));
+
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -52,8 +64,20 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", review),
+app.get ("/demouser", async (req, res) => { 
+    let fakeUser = new user ({ 
+        email: "student@gmail. com",
+        username: "delta-student",
+    });
+
+    let registeredUser = await user.register(fakeUser, "helloworld");
+    res. send (registeredUser);
+});
+
+
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews", reviewRouter),
+app.use("/", userRouter);
 
 // app.get("/testListing", async (req, res) => {
 //     let sampleListing = new Listing({
