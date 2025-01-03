@@ -64,15 +64,15 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get ("/demouser", async (req, res) => { 
-    let fakeUser = new user ({ 
-        email: "student@gmail. com",
-        username: "delta-student",
-    });
+// app.get ("/demouser", async (req, res) => { 
+//     let fakeUser = new user ({ 
+//         email: "student@gmail. com",
+//         username: "delta-student",
+//     });
 
-    let registeredUser = await user.register(fakeUser, "helloworld");
-    res. send (registeredUser);
-});
+//     let registeredUser = await user.register(fakeUser, "helloworld");
+//     res. send (registeredUser);
+// });
 
 
 app.use("/listings", listingsRouter);
