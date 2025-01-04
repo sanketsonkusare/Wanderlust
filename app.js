@@ -12,7 +12,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
-const user = require("./models/user.js");
+const User = require("./models/user.js");
 
 
 main().then(() => {
@@ -50,17 +50,17 @@ app.get("/", (req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
-app.use(passport.session());
 app.use(passport.initialize());
-passport.use(new localStrategy(user.authenticate()));
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
 
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    console.log(res.locals.success);
+    res.locals.currUser = req.user;
     next();
 })
 
@@ -102,5 +102,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(8080, () => {
-    console.log("server is listening");
+    console.log("server is listening on port 8080");
 });
