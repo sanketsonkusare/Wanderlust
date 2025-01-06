@@ -26,6 +26,7 @@ module.exports.createNewListing = async (req, res, next) => {
     await newListing.save();
     req.flash("success", "New listing created!");
     res.redirect("/listings");
+    next();
 };
 
 module.exports.editListing = async (req, res) => {
