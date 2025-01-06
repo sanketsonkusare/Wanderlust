@@ -1,5 +1,13 @@
 const Listing = require("../models/listing");
 
+module.exports.createNewListing = async (req, res, next) => {
+    const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
+    await newListing.save();
+    req.flash("success", "New listing created!");
+    res.redirect("/listings");
+    next();
+};
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -18,15 +26,6 @@ module.exports.showListing = async (req, res) => {
         res.redirect("/listings");
     }
     res.render("listings/show.ejs",{listing});
-};
-
-module.exports.createNewListing = async (req, res, next) => {
-    const newListing = new Listing(req.body.listing);
-    newListing.owner = req.user._id;
-    await newListing.save();
-    req.flash("success", "New listing created!");
-    res.redirect("/listings");
-    next();
 };
 
 module.exports.editListing = async (req, res) => {

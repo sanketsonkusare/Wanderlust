@@ -4,7 +4,7 @@
         <div class="col-8 offset-2">
             <br>
             <h3>Create a New Listing</h3>
-            <form method="POST"  action="/listings" class=".needs-validation">
+            <form method="POST"  action="/listings" class=".needs-validation" enctype="multipart/form-data">
                 <div class="mb-3">
                     <lable for="title" class="form-label">Title</lable>
                     <input name="listing[title]" placeholder="enter title" type="text" class="form-control" required/>
@@ -13,9 +13,10 @@
                     <lable for="description" class="form-label">Description</lable>
                     <textarea name="listing[description]" placeholder="enter description" class="form-control" required></textarea>
                 </div>
+                
                 <div class="mb-3">
-                    <lable for="image" class="form-label">Image</lable>
-                    <input name="listing[image]" placeholder="enter image URL/link" type="text" class="form-control"/>
+                    <lable for="image" class="form-label">Upload Image</lable>
+                    <input name="listing[image]" type="file" class="form-control"/>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-md-4">
