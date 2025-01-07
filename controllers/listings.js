@@ -23,7 +23,7 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.showListing = async (req, res) => {
     let {id} = req.params;
-    const listing = await Listing.findById(id).populate({path: "reviews", populate: {path: "author",},}).populate("owner");
+    const listing = await Listing.findById(id).populate({path: "reviews", populate: {path: "author"}}).populate("owner");
     if(!listing) {
         req.flash("error", "Listing does not exists");
         res.redirect("/listings");
@@ -38,8 +38,10 @@ module.exports.editListing = async (req, res) => {
         req.flash("error", "Listing does not exists");
         res.redirect("/listings");
     }
+    let originalImageUrl =  listing.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/h_200,w_250");
     req.flash("success", "Listing edited!");
-    res.render("listings/edit.ejs",{listing});
+    res.render("listings/edit.ejs",{listing, originalImageUrl});
 };
 
 module.exports.updateListing = async (req, res) => {
@@ -47,7 +49,14 @@ module.exports.updateListing = async (req, res) => {
         throw new ExpressError(400, "Send valid data for listing");
     }
     let {id} = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing});
+
+    if(typeof req.file !== "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        listing.image = {url, filename};
+        await listing.save();
+    }
     req.flash("success", "listing updated!");
     res.redirect(`/listings/${id}`);
 };
