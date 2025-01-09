@@ -2,8 +2,9 @@
 <style>
     #filters{
         display: flex;
-        flex-wrap: wrap;
         align-items: center;
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     .filter{
@@ -16,6 +17,19 @@
         opacity: 1;
         cursor: pointer;
     }
+
+    .filter-container {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-right: 1rem;
+        scroll-behavior: smooth;
+    }
+
+    .filter-container::-webkit-scrollbar{
+        width: 0;
+    }
+
     .filter p {
         font-size: 0.8rem;
     }
@@ -44,71 +58,73 @@
 </style>
 <body>
     <div id="filters">
-        <div class="filter">
-            <a href="/listings">
-                <div><i class="fa-solid fa-list-ul"></i></div>
-                <p>All</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Rooms">
-                <div><i class="fa-solid fa-bed"></i></div>
-                <p>Rooms</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Iconic Cities">
-                <div><i class="fa-solid fa-city"></i></div>
-                <p>Iconic Cities</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Mountains">
-                <div><i class="fa-solid fa-mountain-city"></i></div>
-                <p>Mountains</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Castles">
-                <div><i class="fa-brands fa-fort-awesome"></i></div>
-                <p>Castles</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Pools">
-                <div><i class="fa-solid fa-person-swimming"></i></div>
-                <p>Pools</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Camping">
-                <div><i class="fa-solid fa-campground"></i></div>
-                <p>Camping</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Farms">
-                <div><i class="fa-solid fa-cow"></i></div>
-                <p>Farms</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Arctic">
-                <div><i class="fa-solid fa-snowflake"></i></div>
-                <p>Arctic</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Domes">
-                <div><i class="fa-solid fa-igloo"></i></div>
-                <p>Domes</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings?category=Boats">
-                <div><i class="fa-solid fa-ship"></i></div>
-                <p>Boats</p>
-            </a>
+        <div class="filter-container">
+            <div class="filter">
+                <a href="/listings">
+                    <div><i class="fa-solid fa-list-ul"></i></div>
+                    <p>All</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Rooms">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Iconic Cities">
+                    <div><i class="fa-solid fa-city"></i></div>
+                    <p>Iconic Cities</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Mountains">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <p>Mountains</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Castles">
+                    <div><i class="fa-brands fa-fort-awesome"></i></div>
+                    <p>Castles</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Pools">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Pools</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Camping">
+                    <div><i class="fa-solid fa-campground"></i></div>
+                    <p>Camping</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Farms">
+                    <div><i class="fa-solid fa-cow"></i></div>
+                    <p>Farms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Arctic">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <p>Arctic</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Domes">
+                    <div><i class="fa-solid fa-igloo"></i></div>
+                    <p>Domes</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings?category=Boats">
+                    <div><i class="fa-solid fa-ship"></i></div>
+                    <p>Boats</p>
+                </a>
+            </div>
         </div>
         <div class="tax-toggle">
             <div class="form-check-reverse form-switch">
@@ -138,14 +154,24 @@
 <script>
     let taxSwitch = document.getElementById("flexSwitchCheckDefault");
     taxSwitch.addEventListener("change", function() {
-            const originalPrices = document.querySelectorAll('.original-price');
-            const taxInfos = document.querySelectorAll('.tax-info');
-            if (this.checked) {
-                originalPrices.forEach(price => price.style.display = 'none');
-                taxInfos.forEach(tax => tax.style.display = 'inline');
-            } else {
-                originalPrices.forEach(price => price.style.display = 'inline');
-                taxInfos.forEach(tax => tax.style.display = 'none');
-            }
-        });
+        const originalPrices = document.querySelectorAll('.original-price');
+        const taxInfos = document.querySelectorAll('.tax-info');
+        if (this.checked) {
+            originalPrices.forEach(price => price.style.display = 'none');
+            taxInfos.forEach(tax => tax.style.display = 'inline');
+        } else {
+            originalPrices.forEach(price => price.style.display = 'inline');
+            taxInfos.forEach(tax => tax.style.display = 'none');
+        }
+    });
+    const filterContainer = document.querySelector('.filter-container');
+    filterContainer.addEventListener('wheel', (event) => {
+        if (event.deltaY !== 0) {
+            event.preventDefault();
+            filterContainer.scrollBy({
+                left: event.deltaY,
+                behavior: 'smooth'
+            });
+        }
+    });
 </script>
