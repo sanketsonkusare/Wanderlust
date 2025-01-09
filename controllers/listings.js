@@ -10,6 +10,11 @@ module.exports.createNewListing = async (req, res, next) => {
         limit: 1,
     }).send();
 
+    if (!response.body.features.length) {
+        req.flash("error", "Invalid location");
+        return res.redirect("/listings/new");
+    }
+
     let url = req.file.path;
     let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
@@ -24,8 +29,13 @@ module.exports.createNewListing = async (req, res, next) => {
 };
 
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", {allListings});
+    const { category } = req.query;
+    let filter = {};
+    if (category) {
+        filter.category = category;
+    }
+    const allListings = await Listing.find(filter);
+    res.render("listings/index.ejs", {allListings, category});
 };
 
 module.exports.renderNewForm = (req, res) => {
