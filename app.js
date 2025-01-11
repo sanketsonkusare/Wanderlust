@@ -28,7 +28,7 @@ main().then(() => {
 });
 
 async function main() {
-    await mongoose.connect(process.env.ATLASDB_URL)
+    await mongoose.connect(process.env.ATLASDB_URL);
 }
 
 app.set("view engine", "ejs");
@@ -83,33 +83,14 @@ app.use((req, res, next) => {
     next();
 })
 
-// app.get ("/demouser", async (req, res) => { 
-//     let fakeUser = new user ({ 
-//         email: "student@gmail. com",
-//         username: "delta-student",
-//     });
-
-//     let registeredUser = await user.register(fakeUser, "helloworld");
-//     res. send (registeredUser);
-// });
-
+app.get("/", async (req, res) => {
+    return res.redirect("/listings");
+})
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewRouter),
 app.use("/", userRouter);
 
-// app.get("/testListing", async (req, res) => {
-//     let sampleListing = new Listing({
-//         title: "My new villa",
-//         description: "By the beach",
-//         price: 1200,
-//         location: "Calangute, Goa",
-//         country: "India",
-//     });
-//     await sampleListing.save();
-//     console.log("sample  was saved");
-//     res.send("Successful testing");
-// });
 app.all("*", (req, res, next) => {
     next(new  ExpressError(404, "Page not Found!"));
 });
@@ -117,7 +98,6 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
     let {statusCode=500, message="Something went wrong!"} = err;
     res.status(statusCode).render("error.ejs",{err});
-    // res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
