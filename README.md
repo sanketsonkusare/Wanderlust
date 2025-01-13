@@ -70,10 +70,10 @@ Wanderlust is a full-stack web application designed to help users explore and li
 
 4. Start the application:
     ```sh
-    npm start
+    nodemon app.js
     ```
 
-5. Access the application in your web browser at `http://localhost:3000`.
+5. Access the application in your web browser at `http://localhost:8080`.
 
 ## Usage
 
