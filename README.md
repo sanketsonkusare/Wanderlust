@@ -38,9 +38,29 @@ Wanderlust is a full-stack web application designed to help users explore and li
 
 2. Install dependencies:
     ```sh
-    npm install
+    npm install "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.16.1",
+    "axios": "^1.7.9",
+    "cloudinary": "^1.21.0",
+    "connect": "^3.7.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
+    "cookieparser": "^0.1.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "helmet": "^6.1.5",
+    "joi": "^17.9.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^7.5.0",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^7.0.1",
+    "sanitize-html": "^2.7.0"
+    }
     ```
-
 3. Set up environment variables:
     Create a [.env](http://_vscodecontentref_/0) file in the root of your project and add the following:
     ```env
@@ -75,6 +95,10 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contact
 
 For any questions or inquiries, please contact Sanket Sonkusare at [sanketsonkusare@gmail.com](mailto:sanketsonkusare@gmail.com).
+
+## Live Demo
+
+You can access the live demo of the project [here](https://wanderlust-ef1g.onrender.com).
 
 ---
 
